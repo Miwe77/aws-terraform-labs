@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Mi Galería Serverless</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f0f2f5; text-align: center; padding: 40px; }
+        .gallery { display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; margin-top: 40px; }
+        .card { background: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); width: 280px; transition: transform 0.2s; }
+        .card:hover { transform: translateY(-5px); box-shadow: 0 8px 15px rgba(0,0,0,0.1); }
+        h1 { color: #1a1a1a; }
+        h3 { color: #ff9900; margin-top: 0; word-break: break-all; } /* Naranja AWS */
+        p { color: #555; font-size: 14px; margin: 5px 0; }
+        .badge { display: inline-block; background: #e6f4ea; color: #1e8e3e; padding: 3px 8px; border-radius: 10px; font-size: 12px; font-weight: bold; margin-bottom: 10px; }
+    </style>
+</head>
+<body>
+    <h1>📸 Mi Escaparate en AWS</h1>
+    <p>Página alojada en S3 consumiendo datos de DynamoDB vía API Gateway y Lambda.</p>
+    
+    <div class="gallery" id="galeria-container">
+        <p>⏳ Conectando con la nube...</p>
+    </div>
+
+    <script>
+        // 🚨 ¡SÚPER IMPORTANTE! 🚨
+        // Borra lo que hay entre las comillas y pega la URL verde que te devolvió Terraform en el paso anterior
+        const API_URL = "https://4e9q31avlb.execute-api.us-east-1.amazonaws.com/imagenes";
+
+        fetch(API_URL)
+            .then(response => response.json())
+            .then(data => {
+                const container = document.getElementById('galeria-container');
+                container.innerHTML = ''; 
+
+                if(data.length === 0) {
+                    container.innerHTML = '<p>No hay imágenes en la base de datos todavía.</p>';
+                    return;
+                }
+
+                data.forEach(item => {
+                    const card = document.createElement('div');
+                    card.className = 'card';
+                    // Preparamos el HTML para las etiquetas de la IA
+                    let etiquetasHtml = '';
+                    if (item.labels && item.labels.length > 0) {
+                        etiquetasHtml = '<div style="margin-top: 10px; display: flex; gap: 5px; justify-content: center; flex-wrap: wrap;">';
+                        item.labels.forEach(label => {
+                            etiquetasHtml += `<span style="background: #232f3e; color: white; padding: 2px 8px; border-radius: 12px; font-size: 11px;">🤖 ${label}</span>`;
+                        });
+                        etiquetasHtml += '</div>';
+                    }
+
+                    card.innerHTML = `
+                        <img src="https://${item.bucket}.s3.amazonaws.com/${item.imageId}" alt="Foto" style="width: 100%; height: 200px; object-fit: cover; border-radius: 8px; margin-bottom: 10px;">
+                        <div class="badge">${item.status}</div>
+                        <h3>🖼️ ${item.imageId}</h3>
+                        ${etiquetasHtml}
+                        <p style="margin-top: 15px;"><strong>Subida:</strong> ${new Date(item.uploadTime).toLocaleString()}</p>
+                    `;
+                    container.appendChild(card);
+                });
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                document.getElementById('galeria-container').innerHTML = '<p style="color:red;">❌ Error al conectar con la API.</p>';
+            });
+    </script>
+</body>
+</html>
