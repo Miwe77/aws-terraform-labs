@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: web-miwe77
 spec:
-  replicas: 2 # ¡Vamos a pedirle a ArgoCD que nos mantenga 2 copias vivas!
+  replicas: 4 # ¡Vamos a pedirle a ArgoCD que nos mantenga 4 copias vivas!
   selector:
     matchLabels:
       app: web-miwe77
@@ -16,7 +16,7 @@ spec:
       - name: echo-server
         image: hashicorp/http-echo
         args:
-        - "-text=��� ¡Hola desde el repositorio de Miwe77! ArgoCD ha desplegado esto automáticamente."
+        - "-text=🔥 ¡ACTUALIZACIÓN GITOPS! Ahora tengo 4 réplicas y un nuevo mensaje."
         ports:
         - containerPort: 5678
 ---
