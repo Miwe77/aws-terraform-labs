@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: nginx
-        image: nginx:alpine
+        image: version-super-inventada-que-no-existe-123
         ports:
         - containerPort: 80
 ---
