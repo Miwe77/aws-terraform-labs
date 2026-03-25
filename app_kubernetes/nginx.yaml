@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: nginx
-        image: nginx:tus_cuernos
+        image: nginx:alpine
         ports:
         - containerPort: 80
 ---
