@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  # Usamos el nombre de la "Release" de Helm dinámicamente
+  name: {{ .Release.Name }}-backend
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}
+    spec:
+      containers:
+        - name: servidor-web
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          args:
+            - "-text={{ .Values.config.mensaje }}"
+          ports:
+            - containerPort: 5678

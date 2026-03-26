@@ -1,0 +1,12 @@
+# ¡Nuestras variables mágicas!
+replicaCount: 2
+
+image:
+  repository: hashicorp/http-echo
+  tag: latest
+
+config:
+  mensaje: "🚀 ¡Hola! Este mensaje viene desde un VALUES.YAML de Helm a través de ArgoCD."
+
+service:
+  puertoExterno: 8080
