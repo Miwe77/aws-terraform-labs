@@ -1,19 +1,16 @@
 sonarqube:
-  # Permitimos que SonarQube modifique el sysctl del nodo de GCP para que Elasticsearch no explote
   elasticsearch:
     configureNode: true
   
-  # Pedimos un disco duro virtual pequeño para la prueba (por defecto pide mucho)
   persistence:
     enabled: true
     size: 5Gi
-    
-  postgresql:
-      # --- AQUI ESTA NUESTRO PARCHE GITOPS ---
-      image:
-        tag: "11.22.0-debian-11-r40"
   
   postgresql:
+    # --- AQUI ESTA NUESTRO PARCHE GITOPS ---
+    image:
+      tag: "11.22.0-debian-11-r40" 
+    # ---------------------------------------
     persistence:
       enabled: true
       size: 5Gi
