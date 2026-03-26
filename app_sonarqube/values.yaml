@@ -9,7 +9,7 @@ sonarqube:
   postgresql:
     # --- AQUI ESTA NUESTRO PARCHE GITOPS ---
     image:
-      tag: "11.22.0-debian-11-r40" 
+      tag: "15" 
     # ---------------------------------------
     persistence:
       enabled: true
