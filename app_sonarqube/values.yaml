@@ -1,0 +1,14 @@
+sonarqube:
+  # Permitimos que SonarQube modifique el sysctl del nodo de GCP para que Elasticsearch no explote
+  elasticsearch:
+    configureNode: true
+  
+  # Pedimos un disco duro virtual pequeño para la prueba (por defecto pide mucho)
+  persistence:
+    enabled: true
+    size: 5Gi
+  
+  postgresql:
+    persistence:
+      enabled: true
+      size: 5Gi

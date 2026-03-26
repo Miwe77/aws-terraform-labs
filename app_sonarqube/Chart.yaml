@@ -1,0 +1,10 @@
+apiVersion: v2
+name: mi-sonarqube-gitops
+description: Despliegue de SonarQube usando el patrón Umbrella Chart
+type: application
+version: 1.0.0
+
+dependencies:
+  - name: sonarqube
+    version: "10.5.1" # Usamos una versión estable del chart oficial
+    repository: "https://SonarSource.github.io/helm-chart-sonarqube"
