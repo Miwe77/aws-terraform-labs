@@ -2,15 +2,6 @@ sonarqube:
   elasticsearch:
     configureNode: true
   
-  persistence:
-    enabled: true
-    size: 5Gi
-  
+  # ¡LA OPCIÓN NUCLEAR! Apagamos el sub-chart de PostgreSQL por completo.
   postgresql:
-    # --- AQUI ESTA NUESTRO PARCHE GITOPS ---
-    image:
-      tag: "15" 
-    # ---------------------------------------
-    persistence:
-      enabled: true
-      size: 5Gi
+    enabled: false
